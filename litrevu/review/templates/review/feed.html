@@ -2,5 +2,11 @@
 
 {% block content %}
 <h1>Flux</h1>
+<a href="{% url 'create_ticket' %}">Créer un ticket</a>
+<a href="{% url 'update_ticket' ticket.id %}">Modifier le ticket</a>
+<a href="{% url 'delete_ticket' ticket.id %}">Supprimer le ticket</a>
+<a href="{% url 'create_review' %}">Créer une critique</a>
+<a href="{% url 'update_review' review.id %}">Modifier la critique</a>
+<a href="{% url 'delete_review' review.id %}">Supprimer la critique</a>
 <a href="{% url 'logout' %}">Se déconnecter</a>
 {% endblock %}

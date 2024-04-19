@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Supprimer la critique {{ ticket.headline }}</h1>
+<p>Etes-vous sûr de vouloir supprimer cette critique ?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Supprimer</button>
+</form>
+{% endblock %}

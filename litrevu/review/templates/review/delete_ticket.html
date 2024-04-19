@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Supprimer le ticket {{ ticket.title }}</h1>
+<p>Etes-vous sûr de vouloir supprimer ce ticket ?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Supprimer</button>
+</form>
+{% endblock %}
