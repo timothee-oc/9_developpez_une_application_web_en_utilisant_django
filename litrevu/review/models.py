@@ -10,6 +10,12 @@ class Ticket(models.Model):
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self) -> str:
+        return f'{self.title}'
+    
+    def get_user_viewable_tickets(self, users):
+        pass
+
 
 class Review(models.Model):
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
@@ -24,6 +30,12 @@ class Review(models.Model):
 
     class Meta:
         unique_together = ('user', 'ticket')
+    
+    def __str__(self) -> str:
+        return f'{self.headline}'
+
+    def get_user_viewable_reviews(self, users):
+        pass
 
 
 class UserFollows(models.Model):

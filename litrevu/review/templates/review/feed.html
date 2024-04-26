@@ -1,12 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Flux</h1>
-<a href="{% url 'create_ticket' %}">Créer un ticket</a>
-<a href="{% url 'update_ticket' ticket.id %}">Modifier le ticket</a>
-<a href="{% url 'delete_ticket' ticket.id %}">Supprimer le ticket</a>
-<a href="{% url 'create_review' %}">Créer une critique</a>
-<a href="{% url 'update_review' review.id %}">Modifier la critique</a>
-<a href="{% url 'delete_review' review.id %}">Supprimer la critique</a>
-<a href="{% url 'logout' %}">Se déconnecter</a>
+<button><a href="{% url 'create_ticket' %}">Demander une critique</a></button>
+<button><a href="{% url 'create_review' %}">Créer une critique</a></button>
+{% for post in posts %}
+<div>
+    {% if post.content_type == 'TICKET' %}
+        <p>{{ post.user }} a demandé une critique</p>
+        <p>{{ post.time_created }}</p>
+        <p>{{ post.title }}</p>
+        <p>{{ post.image }}</p>
+        <button>Créer une critique</button>
+    {% elif post.content_type == 'REVIEW' %}
+        <p>{{ post.user }} a publié une critique</p>
+        <p>{{ post.time_created }}</p>
+        <p>{{ post.headline }} - {{ post.rating }}</p>
+        <p>{{ post.body }}</p>
+        <div>
+            <p>Ticket - {{ post.user }}</p>
+            <p>{{ post.title }}</p>
+            <p>{{ post.description }}</p>
+            <p>{{ post.image }}</p>
+        </div>
+    {% endif %}
+</div>
+<hr>
+{% endfor %}
 {% endblock %}

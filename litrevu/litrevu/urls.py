@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from authentication.views import login_view, logout_view, signup_view
-from review.views import feed_view, create_ticket, update_ticket, delete_ticket, create_review, update_review, delete_review
+from review.views import feed_view, create_ticket, update_ticket, delete_ticket, create_review, update_review, delete_review, follows_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,4 +31,5 @@ urlpatterns = [
     path('reviews/create/', create_review, name='create_review'),
     path('reviews/<int:review_id>/update/', update_review, name='update_review'),
     path('reviews/<int:review_id>/delete/', delete_review, name='delete_review'),
+    path('follows/', follows_view, name="follows")
 ]
