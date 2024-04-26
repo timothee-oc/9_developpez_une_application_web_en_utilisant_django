@@ -3,7 +3,17 @@
         <title>LITRevu</title>
     </head>
     <body>
-        <h1>LITRevu</h1>
+        <header>
+            <h1>LITRevu</h1>
+            {% if user.is_authenticated %}
+            <nav>
+                <a href="{% url 'feed' %}">Flux</a>
+                <a href="">Posts</a>
+                <a href="{% url 'follows' %}">Abonnements</a>
+                <a href="{% url 'logout' %}">Se déconnecter</a>
+            </nav>
+            {% endif %}
+        </header>
         {% block content %}
         {% endblock %}
     </body>
