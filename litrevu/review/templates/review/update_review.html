@@ -2,6 +2,21 @@
 
 {% block content %}
 <h1>Modifier votre critique</h1>
+<div>
+    <p>Vous êtes en train de poster en réponse à</p>
+    <div>
+        {% if ticket.user == user %}
+            <p>Vous avez demandé une critique</p>
+        {% else %}
+            <p>{{ ticket.user }} a demandé une critique</p>
+        {% endif %}
+        <p>{{ ticket.time_created }}</p>
+        <p>{{ ticket.title }}</p>
+        <p>{{ ticket.description }}</p>
+        <p>{{ ticket.image }}</p>
+    </div>
+</div>
+<p>Critique</p>
 <form method="post">
     {{ form.as_p }}
     {% csrf_token %}

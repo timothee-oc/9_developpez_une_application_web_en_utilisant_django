@@ -7,7 +7,7 @@
         {% if user.is_authenticated %}
         <nav>
             <a href="{% url 'feed' %}">Flux</a>
-            <a href="">Posts</a>
+            <a href="{% url 'posts' %}">Posts</a>
             <a href="{% url 'follows' %}">Abonnements</a>
             <form action="{% url 'logout' %}" method="post">
                 {% csrf_token %}
