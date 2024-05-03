@@ -3,17 +3,18 @@
         <title>LITRevu</title>
     </head>
     <body>
-        <header>
-            <h1>LITRevu</h1>
-            {% if user.is_authenticated %}
-            <nav>
-                <a href="{% url 'feed' %}">Flux</a>
-                <a href="">Posts</a>
-                <a href="{% url 'follows' %}">Abonnements</a>
-                <a href="{% url 'logout' %}">Se déconnecter</a>
-            </nav>
-            {% endif %}
-        </header>
+        <h1>LITRevu</h1>
+        {% if user.is_authenticated %}
+        <nav>
+            <a href="{% url 'feed' %}">Flux</a>
+            <a href="">Posts</a>
+            <a href="{% url 'follows' %}">Abonnements</a>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Se déconnecter">
+            </form>
+        </nav>
+        {% endif %}
         {% block content %}
         {% endblock %}
     </body>

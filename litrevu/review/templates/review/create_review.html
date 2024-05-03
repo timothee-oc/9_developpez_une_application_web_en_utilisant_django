@@ -3,6 +3,18 @@
 {% block content %}
 <h1>Créer une critique</h1>
 <form method="post">
+    {% if ticket_form %}
+        {{ ticket_form.as_p }}
+    {% else %}
+        {% if ticket.user == user %}
+            <p>Vous avez demandé une critique</p>
+        {% else %}
+            <p>{{ ticket.user }} a demandé une critique</p>
+        {% endif %}
+        <p>{{ ticket.time_created }}</p>
+        <p>{{ ticket.title }}</p>
+        <p>{{ ticket.image }}</p>
+    {% endif %}
     {{ form.as_p }}
     {% csrf_token %}
     <button type="submit">Envoyer</button>

@@ -9,4 +9,4 @@ class TicketForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        exclude = ('user',)
+        exclude = ('user', 'ticket')

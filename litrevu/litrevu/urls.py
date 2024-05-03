@@ -16,19 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from authentication.views import login_view, logout_view, signup_view
+from django.contrib.auth.views import LoginView, LogoutView
+from authentication.views import Signup
 from review.views import feed_view, create_ticket, update_ticket, delete_ticket, create_review, update_review, delete_review, follows_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', login_view, name='login'),
-    path('signup/', signup_view, name='signup'),
-    path('logout/', logout_view, name='logout'),
+    path('login/', LoginView.as_view(template_name="authentication/login.html", redirect_authenticated_user=True), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('signup/', Signup.as_view(), name='signup'),
     path('feed/', feed_view, name='feed'),
     path('tickets/create/', create_ticket, name='create_ticket'),
     path('tickets/<int:ticket_id>/update/', update_ticket, name='update_ticket'),
     path('tickets/<int:ticket_id>/delete/', delete_ticket, name='delete_ticket'),
-    path('reviews/create/', create_review, name='create_review'),
+    path('reviews/create/<int:ticket_id>/', create_review, name='create_review'),
     path('reviews/<int:review_id>/update/', update_review, name='update_review'),
     path('reviews/<int:review_id>/delete/', delete_review, name='delete_review'),
     path('follows/', follows_view, name="follows")

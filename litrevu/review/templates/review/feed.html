@@ -2,17 +2,27 @@
 
 {% block content %}
 <button><a href="{% url 'create_ticket' %}">Demander une critique</a></button>
-<button><a href="{% url 'create_review' %}">Créer une critique</a></button>
+<button><a href="{% url 'create_review' ticket_id=0 %}">Créer une critique</a></button>
 {% for post in posts %}
 <div>
     {% if post.content_type == 'TICKET' %}
-        <p>{{ post.user }} a demandé une critique</p>
+        {% if post.user == user %}
+            <p>Vous avez demandé une critique</p>
+        {% else %}
+            <p>{{ post.user }} a demandé une critique</p>
+        {% endif %}
         <p>{{ post.time_created }}</p>
         <p>{{ post.title }}</p>
         <p>{{ post.image }}</p>
-        <button>Créer une critique</button>
+        {% if post not in user_reviewed_tickets %}
+            <button><a href="{% url 'create_review' post.id %}">Créer une critique</a></button>
+        {% endif %}
     {% elif post.content_type == 'REVIEW' %}
-        <p>{{ post.user }} a publié une critique</p>
+        {% if post.user == user %}
+            <p>Vous avez publié une critique</p>
+        {% else %}
+            <p>{{ post.user }} a publié une critique</p>
+        {% endif %}
         <p>{{ post.time_created }}</p>
         <p>{{ post.headline }} - {{ post.rating }}</p>
         <p>{{ post.body }}</p>

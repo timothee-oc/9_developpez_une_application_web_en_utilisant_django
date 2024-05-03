@@ -11,12 +11,16 @@ def feed_view(request):
     reviews = Review.objects.all()
     reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
 
+    user_reviewed_tickets = [
+        review.ticket for review in reviews if review.user == request.user
+    ]
+
     posts = sorted(
         chain(reviews, tickets),
         key=lambda post: post.time_created,
         reverse=True
     )
-    return render(request, 'review/feed.html', {'posts': posts})
+    return render(request, 'review/feed.html', {'posts': posts, 'user_reviewed_tickets': user_reviewed_tickets})
 
 def create_ticket(request):
     form = TicketForm()
@@ -46,8 +50,14 @@ def delete_ticket(request, ticket_id):
         return redirect('feed')
     return render(request, 'review/delete_ticket.html', {'ticket': ticket})
 
-def create_review(request):
+def create_review(request, ticket_id):
     form = ReviewForm()
+    if ticket_id > 0:
+        ticket_form = None
+        ticket = Ticket.objects.get(id=ticket_id)
+    else:
+        ticket_form = TicketForm()
+        ticket = None
     if request.method == 'POST':
         form = ReviewForm(request.POST, request.FILES)
         if form.is_valid():
@@ -55,7 +65,7 @@ def create_review(request):
             review.user = request.user
             review.save()
             return redirect('feed')
-    return render(request, "review/create_review.html", {'form': form})
+    return render(request, "review/create_review.html", {'form': form, 'ticket_form': ticket_form, 'ticket': ticket})
 
 def update_review(request, review_id):
     review = Review.objects.get(id=review_id)
