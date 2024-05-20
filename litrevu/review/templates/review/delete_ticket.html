@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Supprimer le ticket {{ ticket.title }}</h1>
-<p>Etes-vous sûr de vouloir supprimer ce ticket ?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Supprimer</button>
-</form>
+    <h2>Supprimer votre ticket</h2>
+    <p>Etes-vous sûr de vouloir supprimer le ticket : {{ ticket.title }} ?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button><a href="{% url 'posts' %}">Retour</a></button>
+        <input type="submit" value="Supprimer">
+    </form>
 {% endblock %}

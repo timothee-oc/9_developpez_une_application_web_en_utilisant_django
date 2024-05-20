@@ -1,7 +1,6 @@
-from django.core.validators import MinValueValidator, MaxValueValidator
-from django.conf import settings
 from django.db import models
-
+from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Ticket(models.Model):
     title = models.CharField(max_length=128, verbose_name="Titre")
@@ -10,40 +9,20 @@ class Ticket(models.Model):
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self) -> str:
-        return f'{self.title}'
-    
-    def get_user_viewable_tickets(self, users):
-        pass
-
-
 class Review(models.Model):
-    ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     headline = models.CharField(max_length=128, verbose_name="Titre")
-    rating = models.PositiveSmallIntegerField(
-        # validates that rating must be between 0 and 5
-        validators=[MinValueValidator(0), MaxValueValidator(5)],
-        verbose_name="Note")
-    body = models.CharField(max_length=8192, blank=True, verbose_name="Commentaire")
-    user = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)], verbose_name="Note")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    body = models.TextField(max_length=8192, blank=True, verbose_name="Commentaire")
     time_created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('user', 'ticket')
-    
-    def __str__(self) -> str:
-        return f'{self.headline}'
+        unique_together = ("user", "ticket")
 
-    def get_user_viewable_reviews(self, users):
-        pass
-
-
-class UserFollows(models.Model):
+class UserFollow(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="following")
     followed_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="followed_by")
 
     class Meta:
-        # ensures we don't get multiple UserFollows instances
-        # for unique user-user_followed pairs
-        unique_together = ('user', 'followed_user', )
+        unique_together = ("user", "followed_user")

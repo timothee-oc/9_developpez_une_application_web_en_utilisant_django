@@ -1,20 +1,28 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from django.views.generic import View
-from .forms import SignupForm
+from django.contrib.auth import authenticate, login, logout
+from . import forms
 
-class Signup(View):
-    template_name = "authentication/login.html"
-    form_class = SignupForm
-
-    def get(self, request):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
-    
-    def post(self, request):
-        form = self.form_class(request.POST)
+def signup(request):
+    form = forms.SignupForm()
+    if request.method == "POST":
+        form = forms.SignupForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('feed')
-        return render(request, self.template_name, {'form': form})
+    return render(request, "authentication/signup.html", {"form": form})
+
+def log_in(request):
+    form = forms.LoginForm()
+    if request.method == "POST":
+        form = forms.LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(username=form.cleaned_data["username"], password=form.cleaned_data["password"])
+            if user:
+                login(request, user)
+                return redirect("feed")
+    return render(request, "authentication/login.html", {'form': form})
+
+def log_out(request):
+    logout(request)
+    return redirect("login")

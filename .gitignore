@@ -1,8 +1,7 @@
-venv
 LITReview - Wireframes - FR.pdf
 LITReview+-+Schema.pdf
-models+(1).py
 Django+app+web_Cahier+des+charges+\[2.0].pdf
-
-db.sqlite3
+models+(1).py
+venv
 __pycache__
+db.sqlite3

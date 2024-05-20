@@ -1,43 +1,50 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<button><a href="{% url 'create_ticket' %}">Demander une critique</a></button>
-<button><a href="{% url 'create_review_and_ticket' %}">Créer une critique</a></button>
-{% for post in posts %}
-<div>
-    {% if post.content_type == 'TICKET' %}
-        {% if post.user == user %}
-            <p>Vous avez demandé une critique</p>
-        {% else %}
-            <p>{{ post.user }} a demandé une critique</p>
-        {% endif %}
-        <p>{{ post.time_created }}</p>
-        <p>{{ post.title }}</p>
-        <p>{{ post.image }}</p>
-        {% if post not in user_reviewed_tickets %}
-            <button><a href="{% url 'create_review' post.id %}">Créer une critique</a></button>
-        {% endif %}
-    {% elif post.content_type == 'REVIEW' %}
-        {% if post.user == user %}
-            <p>Vous avez publié une critique</p>
-        {% else %}
-            <p>{{ post.user }} a publié une critique</p>
-        {% endif %}
-        <p>{{ post.time_created }}</p>
-        <p>{{ post.headline }} - {{ post.rating }}</p>
-        <p>{{ post.body }}</p>
-        <div>
-            {% if post.ticket.user == user %}
-                <p>Ticket - Vous</p>
-            {% else %}
-                <p>Ticket - {{ post.ticket.user }}</p>
+    <div class="row mt-5 mb-2 justify-content-around w-75 m-auto">
+        <button class="col-4"><a href="{% url 'create_ticket' %}">Demander une critique</a></button>
+        <button class="col-4"><a href="{% url 'create_review_and_ticket' %}">Créer une critique</a></button>
+    </div>
+    {% for post in posts %}
+        <div class="row my-3 p-2 border w-50 m-auto">
+            {% if post.content_type == "TICKET" %}
+                {% if post.user == user %}
+                    <p class="col-6">Vous avez publié un ticket</p>
+                {% else %}
+                    <p class="col-6">{{ post.user }} a publié un ticket</p>
+                {% endif %}
+                <p class="col-6 text-end">{{ post.time_created }}</p>
+                <p>{{ post.title }}</p>
+                {% if post.description %}
+                    <p>{{ post.description }}</p>
+                {% endif %}
+                {% if post.image %}
+                    <img class="col-3" src="{{ post.image.url }}">
+                {% endif %}
+                {% if post not in already_reviewed %}
+                    <button class="col-4"><a href="{% url 'create_review' post.id %}">Créer une critique</a></button>
+                {% endif %}
+            {% elif post.content_type == "REVIEW" %}
+                {% if post.user == user %}
+                    <p class="col-6">Vous avez publié une critique</p>
+                {% else %}
+                    <p class="col-6">{{ post.user }} a publié une critique</p>
+                {% endif %}
+                <p class="col-6 text-end">{{ post.time_created }}</p>
+                <p>{{ post.headline }} - {{ post.rating }}</p>
+                {% if post.body %}
+                    <p>{{ post.body }}</p>
+                {% endif %}
+                {% if post.ticket.user == user %}
+                    <p>Ticket - Vous</p>
+                {% else %}
+                    <p>Ticket - {{ post.ticket.user }}</p>
+                {% endif %}
+                <p>{{ post.ticket.title }}</p>
+                {% if post.ticket.image %}
+                    <img class="col-3" src="{{ post.ticket.image.url }}">
+                {% endif %}
             {% endif %}
-            <p>{{ post.ticket.title }}</p>
-            <p>{{ post.ticket.description }}</p>
-            <p>{{ post.ticket.image }}</p>
         </div>
-    {% endif %}
-</div>
-<hr>
-{% endfor %}
+    {% endfor %}
 {% endblock %}

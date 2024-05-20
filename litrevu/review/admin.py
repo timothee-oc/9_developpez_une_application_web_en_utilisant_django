@@ -1,4 +1,8 @@
 from django.contrib import admin
-from .models import Ticket, Review, UserFollows
+from . import models
 
-admin.site.register([Ticket, Review, UserFollows])
+admin.site.register([
+    models.Ticket, 
+    models.Review, 
+    models.UserFollow
+])

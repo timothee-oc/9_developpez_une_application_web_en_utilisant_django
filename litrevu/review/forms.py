@@ -1,12 +1,17 @@
 from django import forms
-from .models import Ticket, Review
+from . import models
 
 class TicketForm(forms.ModelForm):
     class Meta:
-        model = Ticket
-        exclude = ('user',)
+        model = models.Ticket
+        exclude = ("user",)
+        widgets = {
+            "title": forms.TextInput(attrs={"class": "d-block w-75 m-auto"}),
+            "description": forms.Textarea(attrs={"class": "d-block w-75 m-auto"}),
+            "image": forms.FileInput(attrs={"class": "d-block w-75 m-auto"}),
+        }
 
 class ReviewForm(forms.ModelForm):
     class Meta:
-        model = Review
-        exclude = ('user', 'ticket')
+        model = models.Review
+        exclude = ("user", "ticket")
