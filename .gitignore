@@ -5,3 +5,4 @@ models+(1).py
 venv
 __pycache__
 db.sqlite3
+litrevu/media
