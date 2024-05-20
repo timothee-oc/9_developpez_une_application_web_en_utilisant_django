@@ -22,7 +22,7 @@
                     <img class="col-3" src="{{ post.image.url }}">
                 {% endif %}
                 {% if post not in already_reviewed %}
-                    <button class="col-4"><a href="{% url 'create_review' post.id %}">Créer une critique</a></button>
+                    <button class="col-4 offset-8"><a href="{% url 'create_review' post.id %}">Créer une critique</a></button>
                 {% endif %}
             {% elif post.content_type == "REVIEW" %}
                 {% if post.user == user %}
