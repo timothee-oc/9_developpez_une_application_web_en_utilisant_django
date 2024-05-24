@@ -9,7 +9,7 @@
 # How to use
 
 * Run the server with : `py .\litrevu\manage.py runserver`
-* Go to [127.0.0.1:8000/login/](127.0.0.1:8000/login/) on your browser
+* Go to [127.0.0.1:8000/login/](http://127.0.0.1:8000/login/) on your browser
 * Sign up to create an user account or login if you already have one
 * Features :
     - Create a ticket to request a review on a book
