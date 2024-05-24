@@ -71,7 +71,7 @@ def update_ticket(request, ticket_id):
         if form.is_valid():
             form.save()
             return redirect('posts')
-    return render(request, "review/update_ticket.html", {'form': form})
+    return render(request, "review/update_ticket.html", {'form': form, 'ticket': ticket})
 
 @login_required
 def delete_ticket(request, ticket_id):
