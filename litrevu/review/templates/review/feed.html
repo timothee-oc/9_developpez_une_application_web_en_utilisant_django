@@ -2,16 +2,16 @@
 
 {% block content %}
     <div class="row mt-5 mb-2 justify-content-around w-75 m-auto">
-        <button class="col-4"><a href="{% url 'create_ticket' %}">Demander une critique</a></button>
-        <button class="col-4"><a href="{% url 'create_review_and_ticket' %}">Créer une critique</a></button>
+        <button class="btn btn-primary col-4"><a class="text-decoration-none text-white" href="{% url 'create_ticket' %}">Demander une critique</a></button>
+        <button class="btn btn-primary col-4"><a class="text-decoration-none text-white" href="{% url 'create_review_and_ticket' %}">Créer une critique</a></button>
     </div>
     {% for post in posts %}
         <div class="row my-3 p-2 border w-50 m-auto">
             {% if post.content_type == "TICKET" %}
                 {% if post.user == user %}
-                    <p class="col-6">Vous avez publié un ticket</p>
+                    <p class="col-6">Vous avez demandé une critique</p>
                 {% else %}
-                    <p class="col-6">{{ post.user }} a publié un ticket</p>
+                    <p class="col-6">{{ post.user }} a demandé une critique</p>
                 {% endif %}
                 <p class="col-6 text-end">{{ post.time_created }}</p>
                 <p>{{ post.title }}</p>
@@ -22,7 +22,7 @@
                     <img class="col-3" src="{{ post.image.url }}">
                 {% endif %}
                 {% if post not in already_reviewed %}
-                    <button class="col-4 offset-8"><a href="{% url 'create_review' post.id %}">Créer une critique</a></button>
+                    <button class="btn btn-primary col-4 offset-8"><a class="text-decoration-none text-white" href="{% url 'create_review' post.id %}">Créer une critique</a></button>
                 {% endif %}
             {% elif post.content_type == "REVIEW" %}
                 {% if post.user == user %}

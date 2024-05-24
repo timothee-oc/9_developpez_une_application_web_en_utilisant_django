@@ -3,12 +3,12 @@
 {% block content %}
     <div class="row mt-5">
         <div class="col d-flex flex-column align-items-center justify-content-center">
-            <h2>Inscrivez-vous</h2>
+            <h2 class="mb-3">Inscrivez-vous</h2>
             <form method="post">
                 {{ form.as_p }}
                 {% csrf_token %}
-                <button><a href="{% url 'login' %}">Retourner</a></button>
-                <input type="submit" value="S'inscrire">
+                <button class="btn btn-primary"><a class="text-decoration-none text-white" href="{% url 'login' %}">Retourner</a></button>
+                <input class="btn btn-primary" type="submit" value="S'inscrire">
             </form>
         </div>
     </div>
