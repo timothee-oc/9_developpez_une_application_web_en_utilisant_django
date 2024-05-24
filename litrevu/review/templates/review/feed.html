@@ -35,15 +35,17 @@
                 {% if post.body %}
                     <p>{{ post.body }}</p>
                 {% endif %}
-                {% if post.ticket.user == user %}
-                    <p>Ticket - Vous</p>
-                {% else %}
-                    <p>Ticket - {{ post.ticket.user }}</p>
-                {% endif %}
-                <p>{{ post.ticket.title }}</p>
-                {% if post.ticket.image %}
-                    <img class="col-3" src="{{ post.ticket.image.url }}">
-                {% endif %}
+                <div class="border p-2">
+                    {% if post.ticket.user == user %}
+                        <p>Ticket - Vous</p>
+                    {% else %}
+                        <p>Ticket - {{ post.ticket.user }}</p>
+                    {% endif %}
+                    <p>{{ post.ticket.title }}</p>
+                    {% if post.ticket.image %}
+                        <img class="col-3" src="{{ post.ticket.image.url }}">
+                    {% endif %}
+                </div>
             {% endif %}
         </div>
     {% endfor %}
