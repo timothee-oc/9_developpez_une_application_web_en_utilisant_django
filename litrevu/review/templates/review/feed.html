@@ -19,7 +19,7 @@
                     <p>{{ post.description }}</p>
                 {% endif %}
                 {% if post.image %}
-                    <img class="col-3" src="{{ post.image.url }}">
+                    <img class="col-3" src="{{ post.image.url }}" alt="{{ post }}" title="{{ post }}">
                 {% endif %}
                 {% if post not in already_reviewed %}
                     <button class="btn btn-primary col-4 offset-8"><a class="text-decoration-none text-white" href="{% url 'create_review' post.id %}">Créer une critique</a></button>
@@ -43,7 +43,7 @@
                     {% endif %}
                     <p>{{ post.ticket.title }}</p>
                     {% if post.ticket.image %}
-                        <img class="col-3" src="{{ post.ticket.image.url }}">
+                        <img class="col-3" src="{{ post.ticket.image.url }}" alt="{{ post.ticket }}" title="{{ post.ticket }}">
                     {% endif %}
                 </div>
             {% endif %}

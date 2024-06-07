@@ -12,7 +12,7 @@
                     <p>{{ post.description }}</p>
                 {% endif %}
                 {% if post.image %}
-                    <img class="col-3" src="{{ post.image.url }}">
+                    <img class="col-3" src="{{ post.image.url }}" alt="{{ post }}" title="{{ post }}">
                 {% endif %}
                 <div class="row m-auto w-100">
                     <button class="col-3 offset-5 btn btn-primary"><a class="text-decoration-none text-white" href="{% url 'update_ticket' post.id %}">Modifier</a></button>
@@ -33,7 +33,7 @@
                     {% endif %}
                     <p>{{ post.ticket.title }}</p>
                     {% if post.ticket.image %}
-                        <img class="col-3" src="{{ post.ticket.image.url }}">
+                        <img class="col-3" src="{{ post.ticket.image.url }}" alt="{{ post.ticket }}" title="{{ post.ticket}}">
                     {% endif %}
                 </div>
                 <div class="row m-auto w-100">
