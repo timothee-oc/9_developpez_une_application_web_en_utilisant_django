@@ -1,6 +1,6 @@
 # Installation
 
-* Install Python (version >= 3.11.5) and make sure pip is installed alongside (version >= 23.2.1)
+* Install Python (version >= 3.12.4) and make sure pip is installed alongside (version >= 24.0)
 * Clone this repo in a local directory and `cd` into it
 * Create a virtual environment with the command : `py -m venv venv`
 * Enter the virtual environment : `.\venv\Script\activate`
