@@ -21,7 +21,7 @@
             {% elif post.content_type == "REVIEW" %}
                 <p class="col-6">Vous avez publié une critique</p>
                 <p class="col-6 text-end">{{ post.time_created }}</p>
-                <p>{{ post.headline }} - {{ post.rating }}</p>
+                <p>{{ post.headline }} - {{ post.rating }}/5</p>
                 {% if post.body %}
                     <p>{{ post.body }}</p>
                 {% endif %}
