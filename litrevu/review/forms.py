@@ -1,6 +1,7 @@
 from django import forms
 from . import models
 
+
 class TicketForm(forms.ModelForm):
     class Meta:
         model = models.Ticket
@@ -10,6 +11,7 @@ class TicketForm(forms.ModelForm):
             "description": forms.Textarea(attrs={"class": "d-block w-75 m-auto"}),
             "image": forms.FileInput(attrs={"class": "d-block w-75 m-auto"}),
         }
+
 
 class ReviewForm(forms.ModelForm):
     class Meta:

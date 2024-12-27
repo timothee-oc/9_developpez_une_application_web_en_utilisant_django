@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import Value, CharField, Q
 from . import forms, models
 
+
 @login_required
 def feed(request):
     follows = [follow.followed_user for follow in models.UserFollow.objects.filter(user=request.user)]
@@ -16,6 +17,7 @@ def feed(request):
     posts = sorted(chain(reviews, tickets), key=lambda post: post.time_created, reverse=True)
     return render(request, "review/feed.html", {"posts": posts, "already_reviewed": already_reviewed})
 
+
 @login_required
 def posts(request):
     tickets = models.Ticket.objects.filter(user=request.user)
@@ -24,6 +26,7 @@ def posts(request):
     reviews = reviews.annotate(content_type=Value("REVIEW", CharField()))
     posts = sorted(chain(tickets, reviews), key=lambda post: post.time_created, reverse=True)
     return render(request, "review/posts.html", {"posts": posts})
+
 
 @login_required
 def follows(request):
@@ -40,13 +43,23 @@ def follows(request):
         already_followed = [follow.followed_user for follow in models.UserFollow.objects.filter(user=request.user)]
         if user and user != request.user and user not in already_followed:
             models.UserFollow.objects.create(user=request.user, followed_user=user)
-    return render(request, "review/follows.html", {"follows": follows, "followers": followers, "error_message": error_message})
+    return render(
+        request,
+        "review/follows.html",
+        {
+            "follows": follows,
+            "followers": followers,
+            "error_message": error_message
+        }
+    )
+
 
 @login_required
 def delete_follow(request, follow_id):
     follow = models.UserFollow.objects.get(id=follow_id)
     follow.delete()
     return redirect("follows")
+
 
 @login_required
 def create_ticket(request):
@@ -59,6 +72,7 @@ def create_ticket(request):
             ticket.save()
             return redirect("feed")
     return render(request, "review/create_ticket.html", {'form': form})
+
 
 @login_required
 def update_ticket(request, ticket_id):
@@ -73,6 +87,7 @@ def update_ticket(request, ticket_id):
             return redirect('posts')
     return render(request, "review/update_ticket.html", {'form': form, 'ticket': ticket})
 
+
 @login_required
 def delete_ticket(request, ticket_id):
     ticket = models.Ticket.objects.get(id=ticket_id)
@@ -82,6 +97,7 @@ def delete_ticket(request, ticket_id):
         ticket.delete()
         return redirect("posts")
     return render(request, "review/delete_ticket.html", {"ticket": ticket})
+
 
 @login_required
 def create_review_and_ticket(request):
@@ -99,7 +115,15 @@ def create_review_and_ticket(request):
             review.ticket = ticket
             review.save()
             return redirect('feed')
-    return render(request, "review/create_review_and_ticket.html", {'ticket_form': ticket_form, "review_form": review_form})
+    return render(
+        request,
+        "review/create_review_and_ticket.html",
+        {
+            'ticket_form': ticket_form,
+            "review_form": review_form
+        }
+    )
+
 
 @login_required
 def create_review(request, ticket_id):
@@ -115,6 +139,7 @@ def create_review(request, ticket_id):
             return redirect('feed')
     return render(request, "review/create_review.html", {'form': form, 'ticket': ticket})
 
+
 @login_required
 def update_review(request, review_id):
     review = models.Review.objects.get(id=review_id)
@@ -128,6 +153,7 @@ def update_review(request, review_id):
             form.save()
             return redirect("posts")
     return render(request, "review/update_review.html", {'form': form, 'ticket': ticket})
+
 
 @login_required
 def delete_review(request, review_id):

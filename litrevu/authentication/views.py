@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from . import forms
 
+
 def signup(request):
     form = forms.SignupForm()
     if request.method == "POST":
@@ -11,6 +12,7 @@ def signup(request):
             login(request, user)
             return redirect('feed')
     return render(request, "authentication/signup.html", {"form": form})
+
 
 def log_in(request):
     form = forms.LoginForm()
@@ -22,6 +24,7 @@ def log_in(request):
                 login(request, user)
                 return redirect("feed")
     return render(request, "authentication/login.html", {'form': form})
+
 
 def log_out(request):
     logout(request)
