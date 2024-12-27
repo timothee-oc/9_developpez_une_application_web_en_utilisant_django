@@ -16,3 +16,13 @@
     - Create a review for a book directly or as an answer to another user's ticket
     - Modify or delete your own posts
     - Follow other users to see their posts appear on your feed page
+
+# Test data
+
+This repo already contains a db (db.sqlite3) which has been filled with some data (tikets, reviews, follows, etc...) and some pictures (in litrevu/media/) to test the application.
+You can log in as either:
+    - saraj
+    - jean_5679
+    - severine123
+    - timothee
+Their passwords are all the same : **hypersecret**
