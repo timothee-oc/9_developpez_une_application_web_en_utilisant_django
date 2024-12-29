@@ -1,0 +1,9 @@
+<form class="container" method="post" enctype="multipart/form-data">
+    <h5 class="row">Livre / Article</h5>
+    <div class="row">{{ticket_form.as_p}}</div>
+    {% csrf_token %}
+    {% if ticket.image %}
+    <img class="row mx-0" src="{{ticket.image.url}}" alt="{{ticket}}" title="{{ticket}}">
+    {% endif %}
+    <input class="row w-100 btn btn-primary mt-1 mx-0" type="submit" value="Envoyer">
+</form>

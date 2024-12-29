@@ -1,31 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="row mt-5">
-        <h2 class="text-center">Suivre d'autres utilisateurs</h2>
-        <form class="d-flex justify-content-center" method="post">
-            {% csrf_token %}
-            <input class="w-75" type="text" placeholder="Nom d'utilisateur" name="user_name">
-            <input class="ms-2" type="submit" value="Envoyer">
-        </form>
-        {% if error_message %}
-            <p class="text-center">{{ error_message }}</p>
-        {% endif %}
-    </div>
-    <div class="row mt-5 w-75 m-auto">
-        <h2 class="text-center">Abonnements</h2>
-        {% for follow in follows %}
-            <p class="col-10 m-auto border">{{ follow.followed_user }}</p>
-            <form class="col-2 p-0" action="{% url 'delete_follow' follow.id %}" method="post">
-                {% csrf_token %}
-                <input class="w-100 h-100" type="submit" value="Désabonner">
-            </form>
-        {% endfor %}
-    </div>
-    <div class="row mt-5 w-75 m-auto">
-        <h2 class="text-center">Abonnés</h2>
-        {% for follow in followers %}
-            <p class="m-auto border">{{ follow.user }}</p>
-        {% endfor %}
-    </div>
+<div class="container w-75">
+    <h2 class="row mt-2">Abonnements</h2>
+    <form class="row mt-1" method="post">
+        {% csrf_token %}
+        <input class="col-9" type="text" placeholder="Nom d'utilisateur" name="user_name">
+        <input class="btn btn-primary col-3" type="submit" value="Envoyer">
+    </form>
+    {% if error_message %}
+    <p class="row mt-1">{{error_message}}</p>
+    {% endif %}
+    {% for follow in follows %}
+    <form class="row mt-1" action="{% url 'delete_follow' follow.id %}" method="post">
+        {% csrf_token %}
+        <input class="col-9" type="text" value="{{follow.followed_user}}" readonly>
+        <input class="btn btn-primary col-3" type="submit" value="Se désabonner">
+    </form>
+    {% endfor %}
+    <h2 class="row mt-2">Abonnés</h2>
+    {% for follow in followers %}
+    <p class="row border mt-1 mb-0 justify-content-center">{{follow.user}}</p>
+    {% endfor %}
+</div>
 {% endblock %}

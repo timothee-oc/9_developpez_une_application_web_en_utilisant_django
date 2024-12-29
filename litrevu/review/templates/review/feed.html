@@ -1,52 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="row mt-5 mb-2 justify-content-around w-75 m-auto">
-        <button class="btn btn-primary col-4"><a class="text-decoration-none text-white" href="{% url 'create_ticket' %}">Demander une critique</a></button>
-        <button class="btn btn-primary col-4"><a class="text-decoration-none text-white" href="{% url 'create_review_and_ticket' %}">Créer une critique</a></button>
+<div class="container w-75">
+    <h2 class="row mt-2">Votre flux</h2>
+    <div class="row mt-2 justify-content-between">
+        <a class="btn btn-primary col-4" href="{% url 'create_ticket' %}">Demander une critique</a>
+        <a class="btn btn-primary col-4" href="{% url 'create_review_and_ticket' %}">Créer une critique</a>
     </div>
     {% for post in posts %}
-        <div class="row my-3 p-2 border w-50 m-auto">
-            {% if post.content_type == "TICKET" %}
-                {% if post.user == user %}
-                    <p class="col-6">Vous avez demandé une critique</p>
-                {% else %}
-                    <p class="col-6">{{ post.user }} a demandé une critique</p>
-                {% endif %}
-                <p class="col-6 text-end">{{ post.time_created }}</p>
-                <p>{{ post.title }}</p>
-                {% if post.description %}
-                    <p>{{ post.description }}</p>
-                {% endif %}
-                {% if post.image %}
-                    <img class="col-3" src="{{ post.image.url }}" alt="{{ post }}" title="{{ post }}">
-                {% endif %}
-                {% if post not in already_reviewed %}
-                    <button class="btn btn-primary col-4 offset-8"><a class="text-decoration-none text-white" href="{% url 'create_review' post.id %}">Créer une critique</a></button>
-                {% endif %}
-            {% elif post.content_type == "REVIEW" %}
-                {% if post.user == user %}
-                    <p class="col-6">Vous avez publié une critique</p>
-                {% else %}
-                    <p class="col-6">{{ post.user }} a publié une critique</p>
-                {% endif %}
-                <p class="col-6 text-end">{{ post.time_created }}</p>
-                <p>{{ post.headline }} - {{ post.rating }}/5</p>
-                {% if post.body %}
-                    <p>{{ post.body }}</p>
-                {% endif %}
-                <div class="border p-2">
-                    {% if post.ticket.user == user %}
-                        <p>Ticket - Vous</p>
-                    {% else %}
-                        <p>Ticket - {{ post.ticket.user }}</p>
-                    {% endif %}
-                    <p>{{ post.ticket.title }}</p>
-                    {% if post.ticket.image %}
-                        <img class="col-3" src="{{ post.ticket.image.url }}" alt="{{ post.ticket }}" title="{{ post.ticket }}">
-                    {% endif %}
-                </div>
-            {% endif %}
-        </div>
+    <div class="row mt-2 p-1 border border-2">
+        {% if post.content_type == "TICKET" %}
+        {% include 'review/ticket.html' with ticket=post %}
+        {% if post not in already_reviewed %}
+        <a class="btn btn-primary col-3 offset-9" href="{% url 'create_review' post.id %}">Créer une critique</a>
+        {% endif %}
+        {% elif post.content_type == "REVIEW" %}
+        {% include 'review/review.html' with review=post %}
+        {% endif %}
+    </div>
     {% endfor %}
+</div>
 {% endblock %}

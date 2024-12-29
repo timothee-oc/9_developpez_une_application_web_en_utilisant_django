@@ -1,31 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2 class="text-center mt-5">Créer une critique</h2>
-    <div class="row border w-75 m-auto p-2">
-        <p>Vous êtes en train de poster en réponse à</p>
-        <div class="col-8 offset-2 border">
-            {% if ticket.user == user %}
-                <p>Vous avez demandé une critique</p>
-            {% else %}
-                <p>{{ ticket.user }} a demandé une critique</p>
-            {% endif %}
-            <p>{{ ticket.time_created }}</p>
-            <p>{{ ticket.title }}</p>
-            {% if ticket.description %}
-                <p>{{ ticket.description }}</p>
-            {% endif %}
-            {% if ticket.image %}
-                <img class="col-3" src="{{ ticket.image.url }}" alt="{{ ticket }}" title="{{ ticket }}">
-            {% endif %}
-        </div>
+<div class="container w-75">
+    <h2 class="row mt-2">Créer une critique</h2>
+    <div class="row border border-2 mt-1 p-1">
+        {% include 'review/ticket.html' %}
     </div>
-    <div class="row border w-75 m-auto p-2">
-        <p>Critique</p>
-        <form method="post">
-            {{ form.as_p }}
-            {% csrf_token %}
-            <input class="btn btn-primary col-3 offset-9" type="submit" value="Envoyer">
-        </form>
+    <div class="row border border-2 mt-1 p-1">
+        {% include 'review/review_form.html' %}
     </div>
+</div>
 {% endblock %}

@@ -1,15 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2 class="text-center mt-5">Modifier votre ticket</h2>
-    <div class="row w-75 m-auto p-2">
-        <form method="post" enctype="multipart/form-data">
-            {{ form.as_p }}
-            {% csrf_token %}
-            {% if ticket.image %}
-                <img class="col-3" src="{{ ticket.image.url }}" alt="{{ ticket }}" title="{{ ticket }}">
-            {% endif %}
-            <input class="col-3 offset-9 btn btn-primary" type="submit" value="Envoyer">
-        </form>
+<div class="container w-75">
+    <h2 class="row mt-2">Modifier votre ticket</h2>
+    <div class="row border border-2 mt-1 p-1">
+        {% include 'review/ticket_form.html' %}
     </div>
+</div>
 {% endblock %}

@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Supprimer votre critique</h2>
-    <p>Etes-vous sûr de vouloir supprimer la critique : {{ review.headline }} ?</p>
-    <form method="post">
+<div class="container w-75">
+    <h2 class="row mt-2">Supprimer votre critique</h2>
+    <p class="row">Etes-vous sûr de vouloir supprimer la critique : {{review.headline}} ?</p>
+    <form class="row" method="post">
         {% csrf_token %}
-        <button><a href="{% url 'posts' %}">Retour</a></button>
-        <input type="submit" value="Supprimer">
+        <a class="btn btn-primary col-6" href="{% url 'posts' %}">Retour</a>
+        <input class="btn btn-primary col-6" type="submit" value="Supprimer">
     </form>
+</div>
 {% endblock %}

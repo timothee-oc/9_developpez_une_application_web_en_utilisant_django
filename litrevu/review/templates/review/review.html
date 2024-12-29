@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row">
+        <p class="col-6 px-0">
+            {% if review.user == user %}
+            Vous avez 
+            {% else %}
+            {{review.user}} a 
+            {% endif %}
+            publié une critique
+        </p>
+        <p class="col-6 text-end px-0">{{review.time_created}}</p>
+    </div>
+    <p class="row">{{review.headline}} - {{review.rating}}/5</p>
+    {% if review.body %}
+    <p class="row">{{review.body}}</p>
+    {% endif %}
+    <div class="row border border-2">
+        <div class="container m-1">
+            <p class="row">
+                Ticket - 
+                {% if review.ticket.user == user %}
+                Vous
+                {% else %}
+                {{review.ticket.user}}
+                {% endif %}
+            </p>
+            <p class="row">{{review.ticket.title}}</p>
+            {% if review.ticket.image %}
+            <img class="row" src="{{review.ticket.image.url}}" alt="{{review.ticket}}" title="{{review.ticket}}">
+            {% endif %}
+        </div>
+    </div>
+</div>

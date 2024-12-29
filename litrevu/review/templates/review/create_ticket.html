@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2 class="text-center mt-5">Créer un ticket</h2>
-    <form method="post" enctype="multipart/form-data">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <input class="btn btn-primary col-3 offset-9" type="submit" value="Envoyer">
-    </form>
+<div class="container w-75">
+    <h2 class="row mt-2">Demander une critique</h2>
+    <div class="row border border-2 mt-1 p-1">
+        {% include 'review/ticket_form.html' %}
+    </div>
+</div>
 {% endblock %}

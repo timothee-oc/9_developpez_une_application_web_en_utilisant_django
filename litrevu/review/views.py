@@ -71,7 +71,7 @@ def create_ticket(request):
             ticket.user = request.user
             ticket.save()
             return redirect("feed")
-    return render(request, "review/create_ticket.html", {'form': form})
+    return render(request, "review/create_ticket.html", {'ticket_form': form})
 
 
 @login_required
@@ -85,7 +85,7 @@ def update_ticket(request, ticket_id):
         if form.is_valid():
             form.save()
             return redirect('posts')
-    return render(request, "review/update_ticket.html", {'form': form, 'ticket': ticket})
+    return render(request, "review/update_ticket.html", {'ticket_form': form, 'ticket': ticket})
 
 
 @login_required
@@ -137,7 +137,7 @@ def create_review(request, ticket_id):
             review.ticket = ticket
             review.save()
             return redirect('feed')
-    return render(request, "review/create_review.html", {'form': form, 'ticket': ticket})
+    return render(request, "review/create_review.html", {'review_form': form, 'ticket': ticket})
 
 
 @login_required
@@ -145,14 +145,13 @@ def update_review(request, review_id):
     review = models.Review.objects.get(id=review_id)
     if review.user != request.user:
         return redirect("feed")
-    ticket = review.ticket
     form = forms.ReviewForm(instance=review)
     if request.method == "POST":
         form = forms.ReviewForm(request.POST, instance=review)
         if form.is_valid():
             form.save()
             return redirect("posts")
-    return render(request, "review/update_review.html", {'form': form, 'ticket': ticket})
+    return render(request, "review/update_review.html", {'review_form': form, 'ticket': review.ticket})
 
 
 @login_required

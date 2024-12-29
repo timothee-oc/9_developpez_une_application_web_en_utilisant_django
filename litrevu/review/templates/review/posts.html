@@ -1,46 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2 class="text-center mt-5 mb-3">Vos posts</h2>
+<div class="container w-75">
+    <h2 class="row mt-2">Vos posts</h2>
     {% for post in posts %}
-        <div class="row p-2 border w-50 m-auto">
-            {% if post.content_type == "TICKET" %}
-                <p class="col-6">Vous avez publié un ticket</p>
-                <p class="col-6 text-end">{{ post.time_created }}</p>
-                <p>{{ post.title }}</p>
-                {% if post.description %}
-                    <p>{{ post.description }}</p>
-                {% endif %}
-                {% if post.image %}
-                    <img class="col-3" src="{{ post.image.url }}" alt="{{ post }}" title="{{ post }}">
-                {% endif %}
-                <div class="row m-auto w-100">
-                    <button class="col-3 offset-5 btn btn-primary"><a class="text-decoration-none text-white" href="{% url 'update_ticket' post.id %}">Modifier</a></button>
-                    <button class="col-3 offset-1 btn btn-primary"><a class="text-decoration-none text-white" href="{% url 'delete_ticket' post.id %}">Supprimer</a></button>
-                </div>
-            {% elif post.content_type == "REVIEW" %}
-                <p class="col-6">Vous avez publié une critique</p>
-                <p class="col-6 text-end">{{ post.time_created }}</p>
-                <p>{{ post.headline }} - {{ post.rating }}/5</p>
-                {% if post.body %}
-                    <p>{{ post.body }}</p>
-                {% endif %}
-                <div class="border p-2 mb-2">
-                    {% if post.ticket.user == user %}
-                        <p>Ticket - Vous</p>
-                    {% else %}
-                        <p>Ticket - {{ post.user }}</p>
-                    {% endif %}
-                    <p>{{ post.ticket.title }}</p>
-                    {% if post.ticket.image %}
-                        <img class="col-3" src="{{ post.ticket.image.url }}" alt="{{ post.ticket }}" title="{{ post.ticket}}">
-                    {% endif %}
-                </div>
-                <div class="row m-auto w-100">
-                    <button class="col-3 offset-5 btn btn-primary"><a class="text-decoration-none text-white" href="{% url 'update_review' post.id %}">Modifier</a></button>
-                    <button class="col-3 offset-1 btn btn-primary"><a class="text-decoration-none text-white" href="{% url 'delete_review' post.id %}">Supprimer</a></button>
-                </div>
-            {% endif %}
-        </div>
+    <div class="row mt-2 p-1 border border-2">
+        {% if post.content_type == "TICKET" %}
+        {% include 'review/ticket.html' with ticket=post %}
+        <a class="btn btn-primary col-3 offset-6" href="{% url 'update_ticket' post.id %}">Modifier</a>
+        <a class="btn btn-primary col-3" href="{% url 'delete_ticket' post.id %}">Supprimer</a>
+        {% elif post.content_type == "REVIEW" %}
+        {% include 'review/review.html' with review=post %}
+        <a class="btn btn-primary col-3 offset-6" href="{% url 'update_review' post.id %}">Modifier</a>
+        <a class="btn btn-primary col-3" href="{% url 'delete_review' post.id %}">Supprimer</a>
+        {% endif %}
+    </div>
     {% endfor %}
+</div>
 {% endblock %}

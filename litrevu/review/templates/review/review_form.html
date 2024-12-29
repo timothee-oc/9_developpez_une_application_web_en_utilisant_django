@@ -1,0 +1,6 @@
+<form class="container" method="post">
+    <h5 class="row">Critique</h5>
+    <div class="row">{{review_form.as_p}}</div>
+    {% csrf_token %}
+    <input class="row w-100 btn btn-primary mt-1 mx-0" type="submit" value="Envoyer">
+</form>

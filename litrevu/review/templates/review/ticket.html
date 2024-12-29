@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="row">
+        <p class="col-6 px-0">
+            {% if ticket.user == user %}
+            Vous avez 
+            {% else %}
+            {{ticket.user}} a
+            {% endif %}
+            demandé une critique
+        </p>
+        <p class="col-6 text-end px-0">{{ticket.time_created}}</p>
+    </div>
+    <p class="row">{{ticket.title}}</p>
+    {% if ticket.description %}
+    <p class="row">{{ticket.description}}</p>
+    {% endif %}
+    {% if ticket.image %}
+    <img class="row" src="{{ticket.image.url}}" alt="{{ticket}}" title="{{ticket}}">    
+    {% endif %}
+</div>
